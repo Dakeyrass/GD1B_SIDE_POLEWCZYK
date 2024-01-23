@@ -22,8 +22,13 @@ public class Controles : MonoBehaviour
         body.velocity = new Vector2(horizontal*speed,body.velocity.y);
         //saut
         if (Input.GetKeyDown(KeyCode.Space) && canJump == true){
-            body.velocity = new Vector2 (body.velocity.x,jump_force);
-            canJump=false;
+            jump();
+        }
+        //flip
+        if (horizontal>0){
+            transform.localScale = new Vector3(0.5f,0.5f);
+        } else if (horizontal<0){
+            transform.localScale = new Vector3(-0.5f,0.5f);
         }
     }
     
@@ -36,5 +41,10 @@ public class Controles : MonoBehaviour
             body.velocity = new Vector2(body.velocity.x,-2);
         }
         
+    }
+
+    private void jump(){
+        body.velocity = new Vector2 (body.velocity.x,jump_force);
+        canJump=false;
     }
 }
