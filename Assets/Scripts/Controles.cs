@@ -11,6 +11,7 @@ public class Controles : MonoBehaviour
     private bool Grounded;
     private bool canDJump;
     public bool powerup=false;
+    [SerializeField] private float health;
     
     
     // Start is called before the first frame update
@@ -52,7 +53,15 @@ public class Controles : MonoBehaviour
         if (collision.gameObject.tag == "Wall"){
             Grounded=true;
             body.velocity = new Vector2(body.velocity.x,-2);
-        }  
+        }
+        //mort du joueur  
+        if (collision.gameObject.tag == "Ennemi"){
+            health-=1;
+            Debug.Log(health);
+            if (health==0){
+                Destroy(body.gameObject);
+            }
+        }
     }
    
     private void jump(){

@@ -14,7 +14,6 @@ private void OnTriggerEnter2D(Collider2D other)
 {
     if (other.CompareTag("Character"))
     {
-        Debug.Log("oui");
         Destroy(bc2d.gameObject);
     }
 }
