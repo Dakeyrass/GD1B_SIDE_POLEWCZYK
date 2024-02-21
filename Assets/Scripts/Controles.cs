@@ -10,6 +10,7 @@ public class Controles : MonoBehaviour
 
     private Rigidbody2D body;
     private Animator anim;
+    private BoxCollider2D col;
 
     private bool Grounded;
     private bool canDJump;
@@ -23,6 +24,8 @@ public class Controles : MonoBehaviour
     {
         body = GetComponent <Rigidbody2D>();
         anim = GetComponent <Animator>();
+        col = GetComponent <BoxCollider2D>();
+        
     }
 
     // Update is called once per frame
@@ -56,6 +59,7 @@ public class Controles : MonoBehaviour
     }
     
     private void Attaque(){
+
         anim.SetTrigger("attaque");
     }
 
@@ -102,5 +106,9 @@ public class Controles : MonoBehaviour
     public void IFrames()
     {
         invincible = false;
+    }
+
+    public void attaqueEnd(){
+        return;
     }
 }
