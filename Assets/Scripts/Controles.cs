@@ -6,12 +6,16 @@ public class Controles : MonoBehaviour
 {   
     [SerializeField] private float speed;
     [SerializeField] private float jump_force;
+    [SerializeField] private float health;
+
     private Rigidbody2D body;
     private Animator anim;
+
     private bool Grounded;
     private bool canDJump;
-    public bool powerup=false;
-    [SerializeField] private float health;
+    public bool powerup = false;
+    private bool invincible = false;
+    
     
     
     // Start is called before the first frame update
@@ -43,8 +47,18 @@ public class Controles : MonoBehaviour
         //animation
         anim.SetBool("run", horizontal !=0);
         anim.SetBool("grounded", Grounded);
+        anim.SetBool("invincible", invincible);
+
+        //attaque
+        if (Input.GetKeyDown(KeyCode.E)){
+            Attaque();
+        }
     }
     
+    private void Attaque(){
+        anim.SetTrigger("attaque");
+    }
+
     private void OnCollisionEnter2D(Collision2D collision){
         if (collision.gameObject.tag == "Ground"){
             Grounded=true;
@@ -54,12 +68,16 @@ public class Controles : MonoBehaviour
             Grounded=true;
             body.velocity = new Vector2(body.velocity.x,-2);
         }
-        //mort du joueur  
-        if (collision.gameObject.tag == "Ennemi"){
+        //mort du joueur et perte de pv  
+        if (collision.gameObject.tag == "Ennemi" && !invincible){
             health-=1;
             Debug.Log(health);
             if (health==0){
                 Destroy(body.gameObject);
+            }
+            else
+            {
+                invincible = true;
             }
         }
     }
@@ -79,5 +97,10 @@ public class Controles : MonoBehaviour
         if (other.CompareTag("Power_up")){
             powerup=true;  
         }
+    }
+
+    public void IFrames()
+    {
+        invincible = false;
     }
 }
