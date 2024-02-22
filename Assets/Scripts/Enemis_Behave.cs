@@ -46,5 +46,8 @@ public class Enemis_Behave : MonoBehaviour
                 going_right = false;
             }  
         }
+        if (other.CompareTag("atk")){
+            Destroy(rgbd.gameObject);
+        }
     }
 }

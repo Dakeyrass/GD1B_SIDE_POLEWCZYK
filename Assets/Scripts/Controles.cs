@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Controles : MonoBehaviour
 {   
     [SerializeField] private float speed;
+    [SerializeField] private float flotte_speed;
     [SerializeField] private float jump_force;
     [SerializeField] private float health = 3;
     [SerializeField] private Text coin_counter;
@@ -14,6 +15,7 @@ public class Controles : MonoBehaviour
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D col;
+    [SerializeField] private BoxCollider2D atk ;
 
     private bool Grounded;
     private bool canDJump;
@@ -21,11 +23,14 @@ public class Controles : MonoBehaviour
     private bool invincible = false;
     private int coin = 0;
 
+    [SerializeField] private LayerMask gzone;
+
     //UI
     [SerializeField] public Image[] coeur;
     [SerializeField] public Sprite coeur_rempli;
     [SerializeField] public Sprite coeur_vide;
     
+
     
     // Start is called before the first frame update
     void Start()
@@ -33,6 +38,8 @@ public class Controles : MonoBehaviour
         body = GetComponent <Rigidbody2D>();
         anim = GetComponent <Animator>();
         col = GetComponent <BoxCollider2D>();
+
+        atk.enabled = false;
         
     }
 
@@ -43,10 +50,14 @@ public class Controles : MonoBehaviour
         //courir
         body.velocity = new Vector2(horizontal*speed,body.velocity.y);
         //saut
-        if (Input.GetKeyDown(KeyCode.Space) && Grounded == true){
+        if (!flotte() && Input.GetKeyDown(KeyCode.Space) && Grounded == true){
             jump();
-        }else if(Input.GetKeyDown(KeyCode.Space) && Grounded == false && canDJump==true){
+        }else if(!flotte() && Input.GetKeyDown(KeyCode.Space) && Grounded == false && canDJump==true){
             djump();
+        }
+
+        if(flotte() && Input.GetKey(KeyCode.Space)){
+            is_en_apensenteur();
         }
         //flip
         if (horizontal>0){
@@ -76,8 +87,13 @@ public class Controles : MonoBehaviour
     }
     
     private void Attaque(){
-
+        atk.enabled = true;
         anim.SetTrigger("attaque");
+    }
+
+    private void is_en_apensenteur(){
+        Debug.Log("jhhuhkihkhk");
+        body.AddForce(Vector2.up * flotte_speed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision){
@@ -113,6 +129,10 @@ public class Controles : MonoBehaviour
             }
         }
     }
+
+    private bool flotte(){
+        return Physics2D.OverlapCircle(body.position,1.5f,gzone);
+    }
    
     private void jump(){
         body.velocity = new Vector2 (body.velocity.x,jump_force);
@@ -142,7 +162,7 @@ public class Controles : MonoBehaviour
     }
 
     public void attaqueEnd(){
-        return;
+        atk.enabled = false;
     }
 
     public void restart(){

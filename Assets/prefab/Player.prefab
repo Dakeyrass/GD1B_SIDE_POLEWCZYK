@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1350877089437118962}
   m_Layer: 6
   m_Name: impact
-  m_TagString: Untagged
+  m_TagString: atk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,10 +224,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
+  flotte_speed: 20
   jump_force: 10
   health: 3
   coin_counter: {fileID: 0}
+  atk: {fileID: 1350877089437118962}
   powerup: 0
+  gzone:
+    serializedVersion: 2
+    m_Bits: 512
   coeur:
   - {fileID: 0}
   - {fileID: 0}
