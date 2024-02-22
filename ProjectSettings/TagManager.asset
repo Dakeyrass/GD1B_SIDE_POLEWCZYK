@@ -10,6 +10,8 @@ TagManager:
   - Power_up
   - Limite_ennemi
   - Ennemi
+  - Coin
+  - Obstacle
   layers:
   - Default
   - TransparentFX

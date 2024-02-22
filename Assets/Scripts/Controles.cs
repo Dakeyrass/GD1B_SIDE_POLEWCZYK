@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Controles : MonoBehaviour
 {   
     [SerializeField] private float speed;
     [SerializeField] private float jump_force;
-    [SerializeField] private float health;
+    [SerializeField] private float health = 3;
+    [SerializeField] private Text coin_counter;
 
     private Rigidbody2D body;
     private Animator anim;
@@ -16,7 +19,12 @@ public class Controles : MonoBehaviour
     private bool canDJump;
     public bool powerup = false;
     private bool invincible = false;
-    
+    private int coin = 0;
+
+    //UI
+    [SerializeField] public Image[] coeur;
+    [SerializeField] public Sprite coeur_rempli;
+    [SerializeField] public Sprite coeur_vide;
     
     
     // Start is called before the first frame update
@@ -56,6 +64,15 @@ public class Controles : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)){
             Attaque();
         }
+
+        //UI VIE
+        foreach(Image img in coeur){
+            img.sprite = coeur_vide;
+        }
+        //equivalent de for i in range de python
+        for(int i = 0; i<health; i++){
+            coeur[i].sprite = coeur_rempli;
+        }
     }
     
     private void Attaque(){
@@ -77,7 +94,18 @@ public class Controles : MonoBehaviour
             health-=1;
             Debug.Log(health);
             if (health==0){
-                Destroy(body.gameObject);
+                restart();
+            }
+            else
+            {
+                invincible = true;
+            }
+        }
+        if (collision.gameObject.tag == "Obstacle" && !invincible){
+            health=0;
+            Debug.Log(health);
+            if (health==0){
+                restart();
             }
             else
             {
@@ -101,6 +129,11 @@ public class Controles : MonoBehaviour
         if (other.CompareTag("Power_up")){
             powerup=true;  
         }
+        if (other.CompareTag("Coin")){
+            coin +=1;
+            coin_counter.text = "" + coin;
+            Destroy(other.gameObject);
+        }
     }
 
     public void IFrames()
@@ -110,5 +143,9 @@ public class Controles : MonoBehaviour
 
     public void attaqueEnd(){
         return;
+    }
+
+    public void restart(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

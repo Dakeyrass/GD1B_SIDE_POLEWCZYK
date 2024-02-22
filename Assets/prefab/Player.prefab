@@ -226,7 +226,14 @@ MonoBehaviour:
   speed: 15
   jump_force: 10
   health: 3
+  coin_counter: {fileID: 0}
   powerup: 0
+  coeur:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  coeur_rempli: {fileID: 21300000, guid: fc2262f3ecda26a4a92414b5e108218e, type: 3}
+  coeur_vide: {fileID: 21300000, guid: bcad63397f091a3418412e3f445a4980, type: 3}
 --- !u!50 &1384131657605661644
 Rigidbody2D:
   serializedVersion: 4
