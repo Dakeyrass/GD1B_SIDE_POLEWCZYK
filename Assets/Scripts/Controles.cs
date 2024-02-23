@@ -55,7 +55,7 @@ public class Controles : MonoBehaviour
         }else if(!flotte() && Input.GetKeyDown(KeyCode.Space) && Grounded == false && canDJump==true){
             djump();
         }
-
+        //pour l'alteration de gravite
         if(flotte() && Input.GetKey(KeyCode.Space)){
             is_en_apensenteur();
         }
@@ -92,7 +92,6 @@ public class Controles : MonoBehaviour
     }
 
     private void is_en_apensenteur(){
-        Debug.Log("jhhuhkihkhk");
         body.AddForce(Vector2.up * flotte_speed);
     }
 
@@ -129,7 +128,7 @@ public class Controles : MonoBehaviour
             }
         }
     }
-
+    //pour l'altération de la gravité
     private bool flotte(){
         return Physics2D.OverlapCircle(body.position,1.5f,gzone);
     }

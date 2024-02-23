@@ -8,6 +8,7 @@ public class Enemis_Behave : MonoBehaviour
     private Rigidbody2D rgbd;
     [SerializeField] private float speed;
     private bool going_right = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +21,26 @@ public class Enemis_Behave : MonoBehaviour
     {
         if (!going_right){
             rgbd.velocity = new Vector2(-speed,rgbd.velocity.y);
+            transform.localScale = new Vector3(-1f,1f);
         }
         else if (going_right){
             rgbd.velocity = new Vector2(speed,rgbd.velocity.y);
+            transform.localScale = new Vector3(1f,1f);
         }
         
+    void OnCollisionEnter2D (Collision2D collision){
+        if (collision.gameObject.tag == "Wall"){
+            if (!going_right){
+                going_right = true;
+            }
+            else if (going_right){
+                going_right = false;
+            }
+        }
     }
+
+    }
+
     void OnCollisionEnter2D (Collision2D collision){
         if (collision.gameObject.tag == "Wall"){
             if (!going_right){
@@ -50,4 +65,6 @@ public class Enemis_Behave : MonoBehaviour
             Destroy(rgbd.gameObject);
         }
     }
+
+    
 }
